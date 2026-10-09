@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Настрой свой NFC-брелок за 2 минуты</title>
+<meta name="description" content="Простая инструкция: как записать ссылку, текст, контакт или Wi-Fi на NFC-брелок.">
+<style>
+:root{--bg:#f3f9ff;--ink:#14263a;--muted:#46586b;--blue:#1d6fe0;--blue-d:#1556b3;--sun:#ffc93c;--mint:#2bb673;--card:#fff;--line:#d3e3f5}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:19px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+h1,h2,h3{line-height:1.2;margin:0 0 .5em}
+h1{font-size:clamp(2rem,8vw,3.2rem)}
+h2{font-size:clamp(1.6rem,6vw,2.2rem)}
+p{margin:0 0 1em}
+section{padding:48px 20px;max-width:760px;margin:0 auto}
+a{color:var(--blue-d)}
+:focus-visible{outline:4px solid var(--sun);outline-offset:3px;border-radius:8px}
+.hero{background:linear-gradient(160deg,#1d6fe0,#1556b3);color:#fff;max-width:none;text-align:center;padding:56px 20px 64px}
+.hero>div{max-width:680px;margin:auto}
+.hero p{font-size:1.15rem}
+.chip{font-size:4.5rem;display:inline-block;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px) rotate(-4deg)}}
+.btn{display:inline-block;background:var(--sun);color:var(--ink);font:inherit;font-weight:700;border:0;border-radius:18px;padding:16px 28px;min-height:56px;cursor:pointer;text-decoration:none;transition:transform .15s}
+.btn:hover{transform:scale(1.04)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:22px}
+.need{display:grid;gap:14px}
+.need .card{display:flex;gap:16px;align-items:center}
+.need .em{font-size:2.4rem}
+.need b{display:block}
+.choose{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pick{font:inherit;font-weight:700;font-size:1.3rem;background:var(--card);color:var(--ink);border:3px solid var(--line);border-radius:24px;padding:26px 10px;cursor:pointer;min-height:120px;transition:.15s}
+.pick span{display:block;font-size:2.6rem}
+.pick:hover{border-color:var(--blue)}
+.pick[aria-pressed=true]{background:var(--blue);color:#fff;border-color:var(--blue-d)}
+#guide[hidden]{display:none}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0}
+.track{height:20px;background:var(--line);border-radius:99px;overflow:hidden}
+#fill{height:100%;width:0;background:var(--mint);border-radius:99px;transition:width .4s}
+#pt{font-weight:700;margin-top:6px}
+ol{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.step{display:grid;grid-template-columns:64px 1fr;gap:6px 16px;align-items:center;transition:background .3s,border-color .3s}
+.step.done{background:#e8f8ef;border-color:var(--mint)}
+.num{width:64px;height:64px;border-radius:50%;background:var(--blue);color:#fff;font-size:2rem;font-weight:800;display:grid;place-items:center}
+.done .num{background:var(--mint)}
+.txt{font-size:1.2rem;font-weight:700}
+.ill{grid-column:1/-1;background:#eaf3ff;border-radius:18px;text-align:center;font-size:3rem;padding:14px}
+.ill small{display:block;font-size:.85rem;font-weight:400;color:var(--muted)}
+.ok{grid-column:1/-1;display:flex;gap:12px;align-items:center;font-weight:700;cursor:pointer;min-height:48px}
+.ok input{width:30px;height:30px;accent-color:var(--mint)}
+#win{display:none;text-align:center;background:var(--sun);border-radius:24px;padding:24px;margin-top:20px;font-size:1.3rem;font-weight:700}
+#win.show{display:block;animation:pop .4s}
+@keyframes pop{from{transform:scale(.8);opacity:0}}
+.ideas{display:grid;gap:14px}
+.ideas h3{font-size:1.3rem;margin-bottom:.3em}
+.ideas p{margin:0;color:var(--muted)}
+.ideas code{display:block;margin-top:8px;background:#eaf3ff;border-radius:10px;padding:8px 12px;font-size:.9rem;word-break:break-all;color:var(--ink)}
+details{background:var(--card);border:2px solid var(--line);border-radius:20px;margin-bottom:12px}
+summary{font-weight:700;padding:18px 20px;cursor:pointer;min-height:56px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋";color:var(--blue);font-size:1.4rem}
+details[open] summary::after{content:"−"}
+details div{padding:0 20px 18px}
+footer{background:var(--ink);color:#fff;text-align:center;padding:40px 20px}
+footer a{color:var(--sun);font-weight:700}
+@media(min-width:640px){.ideas{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+<div>
+<div class="chip" role="img" aria-label="Брелок с NFC">🔑</div>
+<h1>Настрой свой NFC-брелок за 2 минуты</h1>
+<p>NFC — это невидимая связь на коротком расстоянии. Приложи брелок к телефону — и телефон сам откроет ссылку, покажет текст или подключится к Wi-Fi.</p>
+<a class="btn" href="#phone">Начать</a>
+</div>
+</header>
+
+<section id="need" aria-labelledby="h-need">
+<h2 id="h-need">Что понадобится</h2>
+<div class="need">
+<div class="card"><span class="em" aria-hidden="true">📱</span><div><b>Телефон</b>iPhone XS или новее. Или Android со значком NFC.</div></div>
+<div class="card"><span class="em" aria-hidden="true">🏷️</span><div><b>Брелок</b>Тот самый, который ты купил.</div></div>
+<div class="card"><span class="em" aria-hidden="true">⬇️</span><div><b>Бесплатное приложение</b>«NFC Tools». Мы покажем, где его взять.</div></div>
+</div>
+</section>
+
+<section id="phone" aria-labelledby="h-phone">
+<h2 id="h-phone">Какой у тебя телефон?</h2>
+<div class="choose" role="group" aria-label="Выбери телефон">
+<button class="pick" data-os="iphone" aria-pressed="false"><span aria-hidden="true">🍎</span>iPhone</button>
+<button class="pick" data-os="android" aria-pressed="false"><span aria-hidden="true">🤖</span>Android</button>
+</div>
+</section>
+
+<section id="guide" hidden aria-labelledby="h-guide">
+<h2 id="h-guide" tabindex="-1">Делай по шагам</h2>
+<div class="bar">
+<div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="pt"><div id="fill"></div></div>
+<div id="pt">Готово: 0 из 7</div>
+</div>
+<ol id="steps"></ol>
+<div id="win" role="status"></div>
+</section>
+
+<section id="ideas" aria-labelledby="h-ideas">
+<h2 id="h-ideas">Что можно записать</h2>
+<div class="ideas">
+<div class="card"><h3>🌐 Ссылка на соцсети</h3><p>Друг приложил телефон — и открылась твоя страница.</p><code>https://instagram.com/твой_ник</code></div>
+<div class="card"><h3>👤 Визитка</h3><p>Имя и телефон сохраняются в контакты.</p><code>Контакт: Аня, +7 900 000-00-00</code></div>
+<div class="card"><h3>📶 Wi-Fi</h3><p>Гости подключаются без пароля.</p><code>Сеть: MoiDom, пароль: 12345678</code></div>
+<div class="card"><h3>✈️ Telegram</h3><p>Открывает чат с тобой или твой канал.</p><code>https://t.me/твой_ник</code></div>
+<div class="card"><h3>⭐ Отзыв на Google Maps</h3><p>Клиент сразу попадает на страницу отзыва.</p><code>https://g.page/r/твоя-ссылка/review</code></div>
+<div class="card"><h3>💬 Просто текст</h3><p>Записка, которую видно на экране.</p><code>Если нашёл — позвони мне!</code></div>
+</div>
+</section>
+
+<section id="faq" aria-labelledby="h-faq">
+<h2 id="h-faq">Частые проблемы</h2>
+<details><summary>Телефон не видит брелок</summary><div>
+<p>Найди на телефоне место, где «слышно» NFC. У iPhone это самый верх задней стороны. У Android — обычно середина задней крышки.</p>
+<p>Сними толстый чехол и подержи брелок у телефона 2–3 секунды. На Android проверь, что NFC включён в настройках.</p></div></details>
+<details><summary>Не записывается</summary><div>
+<p>Не двигай брелок, пока приложение не скажет «Готово». Если не вышло, попробуй ещё раз, приложив брелок чуть в другом месте.</p>
+<p>Убедись, что запись не слишком длинная. Короткие ссылки работают лучше.</p></div></details>
+<details><summary>Как стереть и записать заново</summary><div>
+<p>Открой «NFC Tools», нажми «Другое» и выбери «Стереть». Приложи брелок. Потом снова пройди шаги выше.</p></div></details>
+<details><summary>Работает ли без интернета</summary><div>
+<p>Да, телефон прочитает брелок и без интернета. Но если на брелке ссылка на сайт, сам сайт откроется только с интернетом. Текст, контакт и Wi-Fi работают совсем без сети.</p></div></details>
+</section>
+
+<footer>
+<h2>Остались вопросы?</h2>
+<p>Напиши нам, поможем за пару минут.</p>
+<p><a href="mailto:davidansarturs@gmail.com">davidansarturs@gmail.com</a></p>
+<p><a href="https://t.me/ArtursDav">Telegram: @ArtursDav</a></p>
+</footer>
+
+<script>
+const S={
+iphone:[
+["📲","Установи «NFC Tools» из App Store","Ищи по названию NFC Tools"],
+["👆","Открой приложение и нажми «Записать»","Кнопка внизу экрана"],
+["➕","Нажми «Добавить запись»","Это то, что запишем"],
+["📝","Выбери: ссылка, текст, контакт или Wi-Fi","Например, «Ссылка»"],
+["⌨️","Введи данные и нажми «ОК»","Проверь, нет ли опечаток"],
+["✍️","Нажми «Записать»","Снизу появится окошко"],
+["🔑","Приложи брелок к верху телефона и держи","Не двигай, пока не будет «Готово»"]],
+android:[
+["⚙️","Включи NFC в настройках телефона","Ищи «NFC» в поиске настроек"],
+["📲","Установи «NFC Tools» из Google Play","Ищи по названию NFC Tools"],
+["👆","Открой приложение и нажми «Записать»","Вкладка «Записать»"],
+["➕","Нажми «Добавить запись»","Это то, что запишем"],
+["📝","Выбери тип и введи данные","Например, «Ссылка»"],
+["✍️","Нажми «Записать»","Приложение ждёт брелок"],
+["🔑","Приложи брелок к середине задней крышки","Держи, пока не будет «Готово»"]]};
+const $=s=>document.querySelector(s),list=$("#steps"),state={iphone:[],android:[]};
+let os=null;
+document.querySelectorAll(".pick").forEach(b=>b.onclick=()=>{
+ os=b.dataset.os;
+ document.querySelectorAll(".pick").forEach(x=>x.setAttribute("aria-pressed",x===b));
+ $("#guide").hidden=false;render();
+ $("#guide").scrollIntoView({behavior:"smooth"});$("#h-guide").focus({preventScroll:true});
+});
+function render(){
+ list.innerHTML="";
+ S[os].forEach((s,i)=>{
+  const li=document.createElement("li");
+  li.className="card step"+(state[os][i]?" done":"");
+  li.innerHTML=`<div class="num" aria-hidden="true">${i+1}</div><div class="txt">${s[1]}</div>
+  <div class="ill" role="img" aria-label="Подсказка к шагу ${i+1}">${s[0]}<small>${s[2]}</small></div>
+  <label class="ok"><input type="checkbox" ${state[os][i]?"checked":""}> Готово!</label>`;
+  li.querySelector("input").onchange=e=>{state[os][i]=e.target.checked;li.classList.toggle("done",e.target.checked);progress()};
+  list.appendChild(li);
+ });
+ progress();
+}
+function progress(){
+ const n=state[os].filter(Boolean).length,t=S[os].length,p=Math.round(n/t*100);
+ $("#fill").style.width=p+"%";
+ $(".track").setAttribute("aria-valuenow",p);
+ $("#pt").textContent=`Готово: ${n} из ${t}`;
+ const w=$("#win");
+ if(n===t){w.textContent="🎉 Ура! Брелок готов. Приложи его к телефону — и проверь!";w.classList.add("show")}
+ else{w.classList.remove("show");w.textContent=""}
+}
+</script>
+</body>
+</html>
