@@ -17,9 +17,13 @@ p{margin:0 0 1em}
 section{padding:48px 20px;max-width:760px;margin:0 auto}
 a{color:var(--blue-d)}
 :focus-visible{outline:4px solid var(--sun);outline-offset:3px;border-radius:8px}
-.hero{background:linear-gradient(160deg,#1d6fe0,#1556b3);color:#fff;max-width:none;text-align:center;padding:56px 20px 64px}
+.hero{position:relative;background:linear-gradient(160deg,#1d6fe0,#1556b3);color:#fff;max-width:none;text-align:center;padding:72px 20px 64px}
 .hero>div{max-width:680px;margin:auto}
 .hero p{font-size:1.15rem}
+/* переключатель языка в правом верхнем углу */
+.lang{position:absolute;top:14px;right:14px;display:flex;gap:6px;background:rgba(255,255,255,.15);padding:4px;border-radius:14px}
+.lang button{font:inherit;font-size:.85rem;font-weight:700;color:#fff;background:none;border:0;border-radius:10px;min-width:44px;min-height:40px;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--sun);color:var(--ink)}
 .chip{font-size:4.5rem;display:inline-block;animation:float 3s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-10px) rotate(-4deg)}}
 .btn{display:inline-block;background:var(--sun);color:var(--ink);font:inherit;font-weight:700;border:0;border-radius:18px;padding:16px 28px;min-height:56px;cursor:pointer;text-decoration:none;transition:transform .15s}
@@ -64,6 +68,8 @@ details[open] summary::after{content:"−"}
 details div{padding:0 20px 18px}
 footer{background:var(--ink);color:#fff;text-align:center;padding:40px 20px}
 footer a{color:var(--sun);font-weight:700}
+/* строка про программу JAL внизу сайта */
+.jal{max-width:560px;margin:28px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.2);font-size:.8rem;color:#c9d6e3}
 @media(min-width:640px){.ideas{grid-template-columns:1fr 1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
@@ -71,33 +77,39 @@ footer a{color:var(--sun);font-weight:700}
 <body>
 
 <header class="hero">
+<!-- кнопки выбора языка -->
+<div class="lang" role="group" aria-label="Язык / Valoda / Language">
+<button data-lang="lv" lang="lv" aria-pressed="false">LV</button>
+<button data-lang="ru" lang="ru" aria-pressed="true">RU</button>
+<button data-lang="en" lang="en" aria-pressed="false">EN</button>
+</div>
 <div>
-<div class="chip" role="img" aria-label="Брелок с NFC">🔑</div>
-<h1>Настрой свой NFC-брелок за 2 минуты</h1>
-<p>NFC — это невидимая связь на коротком расстоянии. Приложи брелок к телефону — и телефон сам откроет ссылку, покажет текст или подключится к Wi-Fi.</p>
-<a class="btn" href="#phone">Начать</a>
+<div class="chip" role="img" data-ta="chip" aria-label="Брелок с NFC">🔑</div>
+<h1 data-t="h1">Настрой свой NFC-брелок за 2 минуты</h1>
+<p data-t="lead">NFC — это невидимая связь на коротком расстоянии. Приложи брелок к телефону — и телефон сам откроет ссылку, покажет текст или подключится к Wi-Fi.</p>
+<a class="btn" href="#phone" data-t="start">Начать</a>
 </div>
 </header>
 
 <section id="need" aria-labelledby="h-need">
-<h2 id="h-need">Что понадобится</h2>
+<h2 id="h-need" data-t="needH">Что понадобится</h2>
 <div class="need">
-<div class="card"><span class="em" aria-hidden="true">📱</span><div><b>Телефон</b>iPhone XS или новее. Или Android со значком NFC.</div></div>
-<div class="card"><span class="em" aria-hidden="true">🏷️</span><div><b>Брелок</b>Тот самый, который ты купил.</div></div>
-<div class="card"><span class="em" aria-hidden="true">⬇️</span><div><b>Бесплатное приложение</b>«NFC Tools». Мы покажем, где его взять.</div></div>
+<div class="card"><span class="em" aria-hidden="true">📱</span><div data-t="need1"><b>Телефон</b>iPhone XS или новее. Или Android со значком NFC.</div></div>
+<div class="card"><span class="em" aria-hidden="true">🏷️</span><div data-t="need2"><b>Брелок</b>Тот самый, который ты купил.</div></div>
+<div class="card"><span class="em" aria-hidden="true">⬇️</span><div data-t="need3"><b>Бесплатное приложение</b>«NFC Tools». Мы покажем, где его взять.</div></div>
 </div>
 </section>
 
 <section id="phone" aria-labelledby="h-phone">
-<h2 id="h-phone">Какой у тебя телефон?</h2>
-<div class="choose" role="group" aria-label="Выбери телефон">
+<h2 id="h-phone" data-t="phoneH">Какой у тебя телефон?</h2>
+<div class="choose" role="group" data-ta="choose" aria-label="Выбери телефон">
 <button class="pick" data-os="iphone" aria-pressed="false"><span aria-hidden="true">🍎</span>iPhone</button>
 <button class="pick" data-os="android" aria-pressed="false"><span aria-hidden="true">🤖</span>Android</button>
 </div>
 </section>
 
 <section id="guide" hidden aria-labelledby="h-guide">
-<h2 id="h-guide" tabindex="-1">Делай по шагам</h2>
+<h2 id="h-guide" tabindex="-1" data-t="guideH">Делай по шагам</h2>
 <div class="bar">
 <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-labelledby="pt"><div id="fill"></div></div>
 <div id="pt">Готово: 0 из 7</div>
@@ -107,58 +119,229 @@ footer a{color:var(--sun);font-weight:700}
 </section>
 
 <section id="ideas" aria-labelledby="h-ideas">
-<h2 id="h-ideas">Что можно записать</h2>
+<h2 id="h-ideas" data-t="ideasH">Что можно записать</h2>
 <div class="ideas">
-<div class="card"><h3>🌐 Ссылка на соцсети</h3><p>Друг приложил телефон — и открылась твоя страница.</p><code>https://instagram.com/твой_ник</code></div>
-<div class="card"><h3>👤 Визитка</h3><p>Имя и телефон сохраняются в контакты.</p><code>Контакт: Аня, +7 900 000-00-00</code></div>
-<div class="card"><h3>📶 Wi-Fi</h3><p>Гости подключаются без пароля.</p><code>Сеть: MoiDom, пароль: 12345678</code></div>
-<div class="card"><h3>✈️ Telegram</h3><p>Открывает чат с тобой или твой канал.</p><code>https://t.me/твой_ник</code></div>
-<div class="card"><h3>⭐ Отзыв на Google Maps</h3><p>Клиент сразу попадает на страницу отзыва.</p><code>https://g.page/r/твоя-ссылка/review</code></div>
-<div class="card"><h3>💬 Просто текст</h3><p>Записка, которую видно на экране.</p><code>Если нашёл — позвони мне!</code></div>
+<div class="card" data-t="idea1"><h3>🌐 Ссылка на соцсети</h3><p>Друг приложил телефон — и открылась твоя страница.</p><code>https://instagram.com/твой_ник</code></div>
+<div class="card" data-t="idea2"><h3>👤 Визитка</h3><p>Имя и телефон сохраняются в контакты.</p><code>Контакт: Аня, +371 20 000 000</code></div>
+<div class="card" data-t="idea3"><h3>📶 Wi-Fi</h3><p>Гости подключаются без пароля.</p><code>Сеть: MoiDom, пароль: 12345678</code></div>
+<div class="card" data-t="idea4"><h3>✈️ Telegram</h3><p>Открывает чат с тобой или твой канал.</p><code>https://t.me/твой_ник</code></div>
+<div class="card" data-t="idea5"><h3>⭐ Отзыв на Google Maps</h3><p>Клиент сразу попадает на страницу отзыва.</p><code>https://g.page/r/твоя-ссылка/review</code></div>
+<div class="card" data-t="idea6"><h3>💬 Просто текст</h3><p>Записка, которую видно на экране.</p><code>Если нашёл — позвони мне!</code></div>
 </div>
 </section>
 
 <section id="faq" aria-labelledby="h-faq">
-<h2 id="h-faq">Частые проблемы</h2>
-<details><summary>Телефон не видит брелок</summary><div>
+<h2 id="h-faq" data-t="faqH">Частые проблемы</h2>
+<details><summary data-t="q1">Телефон не видит брелок</summary><div data-t="a1">
 <p>Найди на телефоне место, где «слышно» NFC. У iPhone это самый верх задней стороны. У Android — обычно середина задней крышки.</p>
 <p>Сними толстый чехол и подержи брелок у телефона 2–3 секунды. На Android проверь, что NFC включён в настройках.</p></div></details>
-<details><summary>Не записывается</summary><div>
+<details><summary data-t="q2">Не записывается</summary><div data-t="a2">
 <p>Не двигай брелок, пока приложение не скажет «Готово». Если не вышло, попробуй ещё раз, приложив брелок чуть в другом месте.</p>
 <p>Убедись, что запись не слишком длинная. Короткие ссылки работают лучше.</p></div></details>
-<details><summary>Как стереть и записать заново</summary><div>
+<details><summary data-t="q3">Как стереть и записать заново</summary><div data-t="a3">
 <p>Открой «NFC Tools», нажми «Другое» и выбери «Стереть». Приложи брелок. Потом снова пройди шаги выше.</p></div></details>
-<details><summary>Работает ли без интернета</summary><div>
+<details><summary data-t="q4">Работает ли без интернета</summary><div data-t="a4">
 <p>Да, телефон прочитает брелок и без интернета. Но если на брелке ссылка на сайт, сам сайт откроется только с интернетом. Текст, контакт и Wi-Fi работают совсем без сети.</p></div></details>
 </section>
 
 <footer>
-<h2>Остались вопросы?</h2>
-<p>Напиши нам, поможем за пару минут.</p>
+<h2 data-t="footH">Остались вопросы?</h2>
+<p data-t="footP">Напиши нам, поможем за пару минут.</p>
 <p><a href="mailto:davidansarturs@gmail.com">davidansarturs@gmail.com</a></p>
 <p><a href="https://t.me/ArtursDav">Telegram: @ArtursDav</a></p>
+<!-- эта строка нужна для JAL, на всех языках остаётся по-латышски -->
+<p class="jal" lang="lv">SMU ir tapis Junior Achievement Latvia programmas «Skolēnu mācību uzņēmums» ietvaros sadarbībā ar Daugavpils Saskaņas pamatskolu</p>
 </footer>
 
 <script>
-const S={
-iphone:[
-["📲","Установи «NFC Tools» из App Store","Ищи по названию NFC Tools"],
-["👆","Открой приложение и нажми «Записать»","Кнопка внизу экрана"],
-["➕","Нажми «Добавить запись»","Это то, что запишем"],
-["📝","Выбери: ссылка, текст, контакт или Wi-Fi","Например, «Ссылка»"],
-["⌨️","Введи данные и нажми «ОК»","Проверь, нет ли опечаток"],
-["✍️","Нажми «Записать»","Снизу появится окошко"],
-["🔑","Приложи брелок к верху телефона и держи","Не двигай, пока не будет «Готово»"]],
-android:[
-["⚙️","Включи NFC в настройках телефона","Ищи «NFC» в поиске настроек"],
-["📲","Установи «NFC Tools» из Google Play","Ищи по названию NFC Tools"],
-["👆","Открой приложение и нажми «Записать»","Вкладка «Записать»"],
-["➕","Нажми «Добавить запись»","Это то, что запишем"],
-["📝","Выбери тип и введи данные","Например, «Ссылка»"],
-["✍️","Нажми «Записать»","Приложение ждёт брелок"],
-["🔑","Приложи брелок к середине задней крышки","Держи, пока не будет «Готово»"]]};
+// ===== Тексты на трёх языках =====
+const T={
+ru:{
+ title:"Настрой свой NFC-брелок за 2 минуты",
+ desc:"Простая инструкция: как записать ссылку, текст, контакт или Wi-Fi на NFC-брелок.",
+ chip:"Брелок с NFC",
+ h1:"Настрой свой NFC-брелок за 2 минуты",
+ lead:"NFC — это невидимая связь на коротком расстоянии. Приложи брелок к телефону — и телефон сам откроет ссылку, покажет текст или подключится к Wi-Fi.",
+ start:"Начать",
+ needH:"Что понадобится",
+ need1:"<b>Телефон</b>iPhone XS или новее. Или Android со значком NFC.",
+ need2:"<b>Брелок</b>Тот самый, который ты купил.",
+ need3:"<b>Бесплатное приложение</b>«NFC Tools». Мы покажем, где его взять.",
+ phoneH:"Какой у тебя телефон?",
+ choose:"Выбери телефон",
+ guideH:"Делай по шагам",
+ hint:"Подсказка к шагу",
+ ok:"Готово!",
+ prog:(n,t)=>`Готово: ${n} из ${t}`,
+ win:"🎉 Ура! Брелок готов. Приложи его к телефону — и проверь!",
+ ideasH:"Что можно записать",
+ idea1:"<h3>🌐 Ссылка на соцсети</h3><p>Друг приложил телефон — и открылась твоя страница.</p><code>https://instagram.com/твой_ник</code>",
+ idea2:"<h3>👤 Визитка</h3><p>Имя и телефон сохраняются в контакты.</p><code>Контакт: Аня, +371 20 000 000</code>",
+ idea3:"<h3>📶 Wi-Fi</h3><p>Гости подключаются без пароля.</p><code>Сеть: MoiDom, пароль: 12345678</code>",
+ idea4:"<h3>✈️ Telegram</h3><p>Открывает чат с тобой или твой канал.</p><code>https://t.me/твой_ник</code>",
+ idea5:"<h3>⭐ Отзыв на Google Maps</h3><p>Клиент сразу попадает на страницу отзыва.</p><code>https://g.page/r/твоя-ссылка/review</code>",
+ idea6:"<h3>💬 Просто текст</h3><p>Записка, которую видно на экране.</p><code>Если нашёл — позвони мне!</code>",
+ faqH:"Частые проблемы",
+ q1:"Телефон не видит брелок",
+ a1:"<p>Найди на телефоне место, где «слышно» NFC. У iPhone это самый верх задней стороны. У Android — обычно середина задней крышки.</p><p>Сними толстый чехол и подержи брелок у телефона 2–3 секунды. На Android проверь, что NFC включён в настройках.</p>",
+ q2:"Не записывается",
+ a2:"<p>Не двигай брелок, пока приложение не скажет «Готово». Если не вышло, попробуй ещё раз, приложив брелок чуть в другом месте.</p><p>Убедись, что запись не слишком длинная. Короткие ссылки работают лучше.</p>",
+ q3:"Как стереть и записать заново",
+ a3:"<p>Открой «NFC Tools», нажми «Другое» и выбери «Стереть». Приложи брелок. Потом снова пройди шаги выше.</p>",
+ q4:"Работает ли без интернета",
+ a4:"<p>Да, телефон прочитает брелок и без интернета. Но если на брелке ссылка на сайт, сам сайт откроется только с интернетом. Текст, контакт и Wi-Fi работают совсем без сети.</p>",
+ footH:"Остались вопросы?",
+ footP:"Напиши нам, поможем за пару минут.",
+ steps:{
+  iphone:[
+   ["📲","Установи «NFC Tools» из App Store","Ищи по названию NFC Tools"],
+   ["👆","Открой приложение и нажми «Записать»","Кнопка внизу экрана"],
+   ["➕","Нажми «Добавить запись»","Это то, что запишем"],
+   ["📝","Выбери: ссылка, текст, контакт или Wi-Fi","Например, «Ссылка»"],
+   ["⌨️","Введи данные и нажми «ОК»","Проверь, нет ли опечаток"],
+   ["✍️","Нажми «Записать»","Снизу появится окошко"],
+   ["🔑","Приложи брелок к верху телефона и держи","Не двигай, пока не будет «Готово»"]],
+  android:[
+   ["⚙️","Включи NFC в настройках телефона","Ищи «NFC» в поиске настроек"],
+   ["📲","Установи «NFC Tools» из Google Play","Ищи по названию NFC Tools"],
+   ["👆","Открой приложение и нажми «Записать»","Вкладка «Записать»"],
+   ["➕","Нажми «Добавить запись»","Это то, что запишем"],
+   ["📝","Выбери тип и введи данные","Например, «Ссылка»"],
+   ["✍️","Нажми «Записать»","Приложение ждёт брелок"],
+   ["🔑","Приложи брелок к середине задней крышки","Держи, пока не будет «Готово»"]]}
+},
+lv:{
+ title:"Iestati savu NFC piekariņu 2 minūtēs",
+ desc:"Vienkārša instrukcija: kā NFC piekariņā ierakstīt saiti, tekstu, kontaktu vai Wi-Fi.",
+ chip:"NFC piekariņš",
+ h1:"Iestati savu NFC piekariņu 2 minūtēs",
+ lead:"NFC ir neredzams savienojums nelielā attālumā. Pieliec piekariņu pie telefona — un telefons pats atvērs saiti, parādīs tekstu vai pieslēgsies Wi-Fi.",
+ start:"Sākt",
+ needH:"Kas būs vajadzīgs",
+ need1:"<b>Telefons</b>iPhone XS vai jaunāks. Vai Android telefons ar NFC.",
+ need2:"<b>Piekariņš</b>Tas pats, ko tu nopirki.",
+ need3:"<b>Bezmaksas lietotne</b>«NFC Tools». Parādīsim, kur to dabūt.",
+ phoneH:"Kāds tev ir telefons?",
+ choose:"Izvēlies telefonu",
+ guideH:"Dari pa soļiem",
+ hint:"Padoms solim",
+ ok:"Gatavs!",
+ prog:(n,t)=>`Gatavs: ${n} no ${t}`,
+ win:"🎉 Urrā! Piekariņš ir gatavs. Pieliec to pie telefona — un pārbaudi!",
+ ideasH:"Ko var ierakstīt",
+ idea1:"<h3>🌐 Saite uz sociālajiem tīkliem</h3><p>Draugs pielika telefonu — un atvērās tava lapa.</p><code>https://instagram.com/tavs_profils</code>",
+ idea2:"<h3>👤 Vizītkarte</h3><p>Vārds un telefona numurs saglabājas kontaktos.</p><code>Kontakts: Anna, +371 20 000 000</code>",
+ idea3:"<h3>📶 Wi-Fi</h3><p>Viesi pieslēdzas, neievadot paroli.</p><code>Tīkls: ManasMajas, parole: 12345678</code>",
+ idea4:"<h3>✈️ Telegram</h3><p>Atver čatu ar tevi vai tavu kanālu.</p><code>https://t.me/tavs_profils</code>",
+ idea5:"<h3>⭐ Atsauksme Google Maps</h3><p>Klients uzreiz nonāk atsauksmes lapā.</p><code>https://g.page/r/tava-saite/review</code>",
+ idea6:"<h3>💬 Vienkārši teksts</h3><p>Zīmīte, kas parādās ekrānā.</p><code>Ja atradi — piezvani man!</code>",
+ faqH:"Biežākās problēmas",
+ q1:"Telefons neredz piekariņu",
+ a1:"<p>Atrodi telefonā vietu, kur NFC “dzird”. iPhone tā ir aizmugures pati augšdaļa. Android — parasti aizmugures vāciņa vidus.</p><p>Noņem biezu maciņu un paturi piekariņu pie telefona 2–3 sekundes. Android telefonā pārbaudi, vai iestatījumos ir ieslēgts NFC.</p>",
+ q2:"Neieraksta",
+ a2:"<p>Nekustini piekariņu, kamēr lietotne nav pabeigusi ierakstu. Ja neizdevās, mēģini vēlreiz, pieliekot piekariņu nedaudz citā vietā.</p><p>Pārliecinies, ka ieraksts nav pārāk garš. Īsas saites strādā labāk.</p>",
+ q3:"Kā izdzēst un ierakstīt no jauna",
+ a3:"<p>Atver «NFC Tools», nospied «Other» un izvēlies «Erase tag». Pieliec piekariņu. Pēc tam vēlreiz izej soļus augstāk.</p>",
+ q4:"Vai strādā bez interneta",
+ a4:"<p>Jā, telefons nolasīs piekariņu arī bez interneta. Bet, ja piekariņā ir saite uz mājaslapu, pati lapa atvērsies tikai ar internetu. Teksts, kontakts un Wi-Fi strādā pavisam bez tīkla.</p>",
+ footH:"Vēl ir jautājumi?",
+ footP:"Uzraksti mums — palīdzēsim pāris minūtēs.",
+ steps:{
+  iphone:[
+   ["📲","Instalē «NFC Tools» no App Store","Meklē pēc nosaukuma NFC Tools"],
+   ["👆","Atver lietotni un nospied «Write»","Poga ekrāna apakšā"],
+   ["➕","Nospied «Add a record»","Tas ir tas, ko ierakstīsim"],
+   ["📝","Izvēlies: saite, teksts, kontakts vai Wi-Fi","Piemēram, «URL»"],
+   ["⌨️","Ievadi datus un nospied «OK»","Pārbaudi, vai nav drukas kļūdu"],
+   ["✍️","Nospied «Write»","Apakšā parādīsies lodziņš"],
+   ["🔑","Pieliec piekariņu pie telefona augšdaļas un turi","Nekustini, kamēr ieraksts nav pabeigts"]],
+  android:[
+   ["⚙️","Ieslēdz NFC telefona iestatījumos","Iestatījumu meklēšanā ieraksti «NFC»"],
+   ["📲","Instalē «NFC Tools» no Google Play","Meklē pēc nosaukuma NFC Tools"],
+   ["👆","Atver lietotni un nospied «Write»","Cilne «Write»"],
+   ["➕","Nospied «Add a record»","Tas ir tas, ko ierakstīsim"],
+   ["📝","Izvēlies veidu un ievadi datus","Piemēram, «URL»"],
+   ["✍️","Nospied «Write»","Lietotne gaida piekariņu"],
+   ["🔑","Pieliec piekariņu pie aizmugures vāciņa vidus","Turi, kamēr ieraksts nav pabeigts"]]}
+},
+en:{
+ title:"Set up your NFC keychain in 2 minutes",
+ desc:"A simple guide: how to write a link, text, contact or Wi-Fi to an NFC keychain.",
+ chip:"NFC keychain",
+ h1:"Set up your NFC keychain in 2 minutes",
+ lead:"NFC is an invisible short-range connection. Hold the keychain to your phone — and the phone will open a link, show a text or connect to Wi-Fi on its own.",
+ start:"Start",
+ needH:"What you need",
+ need1:"<b>Phone</b>iPhone XS or newer. Or an Android phone with NFC.",
+ need2:"<b>Keychain</b>The one you bought.",
+ need3:"<b>Free app</b>“NFC Tools”. We'll show you where to get it.",
+ phoneH:"Which phone do you have?",
+ choose:"Choose your phone",
+ guideH:"Follow the steps",
+ hint:"Hint for step",
+ ok:"Done!",
+ prog:(n,t)=>`Done: ${n} of ${t}`,
+ win:"🎉 Hooray! Your keychain is ready. Hold it to your phone — and check!",
+ ideasH:"What you can write",
+ idea1:"<h3>🌐 Social media link</h3><p>A friend taps their phone — and your page opens.</p><code>https://instagram.com/your_name</code>",
+ idea2:"<h3>👤 Contact card</h3><p>Name and phone number are saved to contacts.</p><code>Contact: Anna, +371 20 000 000</code>",
+ idea3:"<h3>📶 Wi-Fi</h3><p>Guests connect without typing a password.</p><code>Network: MyHome, password: 12345678</code>",
+ idea4:"<h3>✈️ Telegram</h3><p>Opens a chat with you or your channel.</p><code>https://t.me/your_name</code>",
+ idea5:"<h3>⭐ Google Maps review</h3><p>Customers land straight on the review page.</p><code>https://g.page/r/your-link/review</code>",
+ idea6:"<h3>💬 Plain text</h3><p>A note that shows up on the screen.</p><code>If found — please call me!</code>",
+ faqH:"Common problems",
+ q1:"The phone doesn't see the keychain",
+ a1:"<p>Find the spot where your phone “hears” NFC. On iPhone it's the very top of the back. On Android it's usually the middle of the back cover.</p><p>Take off a thick case and hold the keychain to the phone for 2–3 seconds. On Android, check that NFC is turned on in settings.</p>",
+ q2:"It won't write",
+ a2:"<p>Don't move the keychain until the app says it's done. If it fails, try again with the keychain in a slightly different spot.</p><p>Make sure the record isn't too long. Short links work better.</p>",
+ q3:"How to erase and write again",
+ a3:"<p>Open “NFC Tools”, tap “Other” and choose “Erase tag”. Hold the keychain to the phone. Then go through the steps above again.</p>",
+ q4:"Does it work without internet?",
+ a4:"<p>Yes, the phone reads the keychain without internet. But if the keychain holds a website link, the site itself only opens with internet. Text, contact and Wi-Fi work with no connection at all.</p>",
+ footH:"Still have questions?",
+ footP:"Message us — we'll help in a couple of minutes.",
+ steps:{
+  iphone:[
+   ["📲","Install “NFC Tools” from the App Store","Search for NFC Tools"],
+   ["👆","Open the app and tap “Write”","Button at the bottom of the screen"],
+   ["➕","Tap “Add a record”","This is what we'll write"],
+   ["📝","Choose: link, text, contact or Wi-Fi","For example, “URL”"],
+   ["⌨️","Enter the details and tap “OK”","Check for typos"],
+   ["✍️","Tap “Write”","A window pops up at the bottom"],
+   ["🔑","Hold the keychain to the top of the phone","Don't move it until it's done"]],
+  android:[
+   ["⚙️","Turn on NFC in your phone settings","Search for “NFC” in settings"],
+   ["📲","Install “NFC Tools” from Google Play","Search for NFC Tools"],
+   ["👆","Open the app and tap “Write”","The “Write” tab"],
+   ["➕","Tap “Add a record”","This is what we'll write"],
+   ["📝","Choose the type and enter the details","For example, “URL”"],
+   ["✍️","Tap “Write”","The app is waiting for the keychain"],
+   ["🔑","Hold the keychain to the middle of the back cover","Hold it until it's done"]]}
+}};
+
 const $=s=>document.querySelector(s),list=$("#steps"),state={iphone:[],android:[]};
-let os=null;
+let os=null,L=T.ru;
+
+// ===== Выбор языка: ?lang= в ссылке → сохранённый выбор → язык телефона → русский =====
+function startLang(){
+ const ok=x=>x&&T[x]?x:null;
+ let saved=null;try{saved=localStorage.getItem("lang")}catch(e){}
+ return ok(new URLSearchParams(location.search).get("lang"))||ok(saved)||ok((navigator.language||"").slice(0,2).toLowerCase())||"ru";
+}
+function setLang(code){
+ L=T[code];
+ document.documentElement.lang=code;
+ document.title=L.title;
+ document.querySelector('meta[name=description]').content=L.desc;
+ document.querySelectorAll("[data-t]").forEach(el=>el.innerHTML=L[el.dataset.t]);
+ document.querySelectorAll("[data-ta]").forEach(el=>el.setAttribute("aria-label",L[el.dataset.ta]));
+ document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===code));
+ try{localStorage.setItem("lang",code)}catch(e){}
+ if(os)render();
+}
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+
+// ===== Выбор телефона и шаги =====
 document.querySelectorAll(".pick").forEach(b=>b.onclick=()=>{
  os=b.dataset.os;
  document.querySelectorAll(".pick").forEach(x=>x.setAttribute("aria-pressed",x===b));
@@ -167,26 +350,28 @@ document.querySelectorAll(".pick").forEach(b=>b.onclick=()=>{
 });
 function render(){
  list.innerHTML="";
- S[os].forEach((s,i)=>{
+ L.steps[os].forEach((s,i)=>{
   const li=document.createElement("li");
   li.className="card step"+(state[os][i]?" done":"");
   li.innerHTML=`<div class="num" aria-hidden="true">${i+1}</div><div class="txt">${s[1]}</div>
-  <div class="ill" role="img" aria-label="Подсказка к шагу ${i+1}">${s[0]}<small>${s[2]}</small></div>
-  <label class="ok"><input type="checkbox" ${state[os][i]?"checked":""}> Готово!</label>`;
+  <div class="ill" role="img" aria-label="${L.hint} ${i+1}">${s[0]}<small>${s[2]}</small></div>
+  <label class="ok"><input type="checkbox" ${state[os][i]?"checked":""}> ${L.ok}</label>`;
   li.querySelector("input").onchange=e=>{state[os][i]=e.target.checked;li.classList.toggle("done",e.target.checked);progress()};
   list.appendChild(li);
  });
  progress();
 }
 function progress(){
- const n=state[os].filter(Boolean).length,t=S[os].length,p=Math.round(n/t*100);
+ const n=state[os].filter(Boolean).length,t=L.steps[os].length,p=Math.round(n/t*100);
  $("#fill").style.width=p+"%";
  $(".track").setAttribute("aria-valuenow",p);
- $("#pt").textContent=`Готово: ${n} из ${t}`;
+ $("#pt").textContent=L.prog(n,t);
  const w=$("#win");
- if(n===t){w.textContent="🎉 Ура! Брелок готов. Приложи его к телефону — и проверь!";w.classList.add("show")}
+ if(n===t){w.textContent=L.win;w.classList.add("show")}
  else{w.classList.remove("show");w.textContent=""}
 }
+
+setLang(startLang());
 </script>
 </body>
 </html>
